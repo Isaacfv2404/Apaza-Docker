@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,17 +26,30 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+{
+    error_log(json_encode($request->all()));
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+    $validatedData = $request->validate([
+        'email' => ['required', 'string', 'email', 'max:255'],//El correo puede estar repetido
+        'telephone' => ['required', 'string', 'size:8'], // Asegúrate de validar el teléfono de acuerdo a tus necesidades
+        'name' => ['required', 'string', 'max:255'],
+    ]);
+    //Asigna los valores validados al usuario de forma manual
+    //Esto porque el los datos tienen otro nombre
+    $request->user()->fill($validatedData);
+    
+    //Automatica: $request->user()->fill($request->validated());
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    if ($request->user()->isDirty('email')) {
+        $request->user()->email_verified_at = null;
     }
+    
+    $request->user()->save();
+
+    error_log(json_encode($request->user()));
+
+    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+}
 
     /**
      * Delete the user's account.
