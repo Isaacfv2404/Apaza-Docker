@@ -1,0 +1,24 @@
+/* Estilos para centrar los divs */
+.max-w-7xl {
+    margin: 0 auto; /* Centrar horizontalmente */
+}
+
+/* Estilos para los contenedores de publicaciones */
+.post-container {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto 20px; /* Centrar horizontalmente y añadir espacio inferior */
+    padding: 20px; /* Espacio interno del contenedor */
+    border: 1px solid #4d359d; /* Borde para resaltar el contenedor */
+    border-radius: 8px; /* Borde redondeado */
+    background-color: #f9f9f9; /* Color de fondo del contenedor */
+}
+
+/* Estilos para los divs dentro de las secciones */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas de tamaño automático */
+    grid-gap: 20px; /* Espacio entre las celdas */
+    justify-items: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+}
+
